@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <title>LocalWeatherApp</title>
+    <style>
+    body {
+            margin-top: 50px;
+            margin-bottom: 50px;
+
+            text-align: center;
+            background-color: darkslategray;
+            }
+.panel-body{
+           min-height:  350px;
+        }
+.panel{
+    background-color:#00a3cc;
+        }
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 34px;
+            
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #007a99;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content:"°C / °F";
+  height: 26px;
+  width: 46px;
+  left: 4px;
+  bottom: 4px;
+  background-color:lightblue;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+
+        
+/*input:checked + .slider {
+  background-color: #2196F3;
+}*/
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+    </style>
+</head>
+<body>
+     <div class="container">
+      <div class="panel-group">
+    <div class="panel panel-success">
+      <div class="panel-heading">Local Weather App</div>
+      <div class="panel-body">
+        <label class="switch">
+        <input id="unit-convert" type="checkbox" data-toggle="toggle" >
+          <span class="slider"></span>
+</label>
+         <!--<div><span class="btn btn-info btn-c"> &#8451;</span><span> </span><span class="btn btn-info btn-f"> &#8457;</span></div>-->
+         <h1 id="h1" style="display:none;">h1</h1>
+        <h2 style="display:none;">h2</h2>
+        <h3 style="display:none;">h3</h3>
+        <h4 style="display:none;">h4</h4>
+        <h5 style="display:none;">h5</h5>
+        
+ 
+        
+      </div>
+<!--<div id="out"></div>-->
+<div class="panel-heading">coded by HrIsToV</div>
+    </div> 
+    </div>
+    </div>
+ <script>
+     $(function(){
+     
+    
+    $(document).ready(function (e) {
+        var wAPPurl=
+         //'https://fcc-weather-api.glitch.me/api/current?';
+         "https://api.openweathermap.org/data/2.5/weather";
+          var apiKey =   '1de7276e0300c25f7925d32e99e36d48';
+          
+          getPosition(); 
+            
+        function getPosition(){
+            var output = document.getElementById("out");
+            
+            if (navigator.geolocation) {
+             
+                navigator.geolocation.getCurrentPosition(showPosition);
+                
+            } else { 
+                output.innerHTML = "Geolocation is not supported by this browser.";
+            }
+  //output.innerHTML = "<p>Locating…</p>";
+          }
+        function showPosition(position) {
+            var lat  = position.coords.latitude;
+            var long = position.coords.longitude;
+            wAPPurl += "?lat="+lat+"&lon="+long+"&APPID="+apiKey+"&units=metric";
+            weathetDetails()
+        }
+    function weathetDetails(){
+        $.ajax({
+            url: wAPPurl,
+            type:'GET',
+            dataType: 'json',
+            success: function(d){
+                var temperature=d.main.temp;
+                var image = d.weather[0].icon;
+                var wDescr =d.weather[0].description;
+                var tempInF= Math.round((temperature*1.8)+32);
+              console.log(d);
+               $('h2:hidden').show(1000).html(wDescr);
+            $('h1:hidden').show(1000).html(temperature+'&#8451;').show(1000);
+            //,<br>'+'humidity: '+d.main.humidity+'%');//&#8457;
+            
+                $('h3:hidden').show(1000).html('<span><img width="75" height="75" src="http://openweathermap.org/img/w/' + image + '.png"></span>');
+                $('h4:hidden').show(1000).html(d.sys.country);
+                $('h5:hidden').show(1000).html(d.name);
+                $(function() {
+                    $('#unit-convert').change(function() {
+                      if ($(this).prop('checked')){
+                        $("#h1").html(tempInF+'&#8457;');
+                            } else {
+                                $("#h1").html(temperature+'&#8451;');
+                            }
+            
+                    })
+                  }) 
+                /*$(".btn-c").click(function(){
+                    $("h1").html(temperature+'&#8451;');
+                });
+                $(".btn-f").click(function(){
+                    $("h1").html(tempInF+'&#8457;');
+                });*/
+                console.log(d);
+            },
+            error: function(err) {
+              alert('Oops something went wrong, Please try again.');
+              console.log(err);
+            }
+        });
+    }    
+    }); 
+});
+    </script>
+</body>
+</html>
