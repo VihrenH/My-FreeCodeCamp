@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <title>RandomQuoteMachine</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Handlee|Montez');
+        body {
+            text-align: center;
+            background-image: url('https://www.dropbox.com/s/c9k2xxmz3730ia1/OldPaper3.jpg?dl=1');
+            background-size: cover;
+        }
+
+        #h1 {
+            margin-top: 35px;
+            font-family: 'Montez', cursive;
+            font-size: 55px;
+        }
+
+        #h3 {
+
+            font-family: 'Montez', cursive;
+            font-size: 45px;
+        }
+
+        .button {
+
+            background-color: #ac7339;
+            border: 1px solid black;
+            border-radius: 6px;
+            font-family: 'Handlee', cursive;
+            color: #1a0f00;
+            font-size: 20px;
+            margin: 4px 4px;
+        }
+
+        .button:hover {
+            background-color: #bf8040;
+        }
+
+        #quote-content {
+            font-family: 'Montez', cursive;
+            font-size: 45px;
+            color: #27190c;
+        }
+
+        #author {
+            font-family: 'Handlee', cursive;
+            font-size: 30px;
+            color: #1a0f00;
+        }
+
+        #tweetQ,
+        .fa fa-twitter {
+
+            font-size: 20px;
+            color: #1a0f00;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="h1">Random Quote Machine</div><br>
+    <div id="h3">
+        <p>Click the button below to see random quote.</p>
+        <p>And you can share the quote on Twitter.</p>
+    </div><br>
+    <div class="container-fluid row">
+        <div class="col align-self-center">
+            <button id="getQuote" class="btn button">  Show me a new random quote  </button><span></span>
+
+            <a id="tweetQ" class="btn button" href="#"> Press a button to tweet out a quote</a>
+            <hr>
+
+        </div>
+        <div class="container-fluid row ">
+            <div id="quote-content" class=" col-lg-12 col-md-12 col-sm-12 col-xs-12   message">
+                <p>Click the button above to get a quote.</p>
+
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $('#getQuote').on('click', function() {
+
+            $.ajaxSetup({
+                cache: false
+            });
+
+            $.getJSON("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&callback=", function(a) {
+
+                var quoteContent =
+                    $('.message').html(a[0].content + "<hr><p id=author>" + "~ " + a[0].title + "</p>");
+                var twitterURL = 'https://twitter.com/intent/tweet?hashtags=quotes,freeCodeCamp&related=freecodecamp&text=';
+
+                $('#tweetQ.btn').attr('href', twitterURL + quoteContent.text()).attr('target', '_blank');
+            });
+
+        });
+    </script>
+</body>
+
+</html>
