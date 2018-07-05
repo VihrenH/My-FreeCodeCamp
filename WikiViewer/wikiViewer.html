@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1, shrink-to-fit=no">
+    <title>Wiki Viewer</title>
+    <link rel="stylesheet" href="wikiViewer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body style="background-color: #eaeaea">
+
+    <h1 style="color: darkorange">Wikipedia Viewer</h1>
+    <p><input id="searchTerm" type="text" name="searchTerm" value="" required placeholder="Search in Wikipedia">
+        <button type="button" class=" btn-link" id="search">
+      <span class="glyphicon glyphicon-search"></span> 
+    </button></p>
+
+    <p><a style="color: antiquewhite" id="randomSearch" class="button btn " href="https://en.wikipedia.org/wiki/Special:Random" target="_blank">Random Wikipedia Search</a>
+    </p>
+
+
+    <div class="container" id="output">
+
+    </div>
+
+    <!--<script src="wikiViewer.js">-->
+    <script src="wikiAPP.js">
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+ .dataOutput {
+     padding: 10px;
+     border: 2px solid darkorange;
+     text-align: center;
+     background-color: #150250;/*1F0474  */
+ }
+
+ body {
+     text-align: center;
+ }
+
+ #searchTerm {
+     background-color: lightgoldenrodyellow;
+     /* #eaeaea */
+     text-align: center;
+ }
+
+ #randomSearch {
+     color: darkcyan;
+ }
+
+ #search {
+     color: darkorange;
+ }
+
+ .button {
+     background-color: darkslateblue;
+     border-radius: 6px;
+     font-size: 30px;
+     width: 270px;
+
+ }
